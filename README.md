@@ -6,6 +6,7 @@ developed and tested using Python3.10.
 Word lists came from here:
     https://www.reddit.com/r/wordle/comments/s4tcw8/comment/hstkip2/?utm_source=share&utm_medium=web2x&context=3
 
+## Getting Started
 To install, set up a virtualenv and activate it.  Then run
 ```bash
 pip install -r requirements.lock
@@ -17,8 +18,10 @@ pytest tests/
 ```
 
 You can also simulate all current strategies from `main.py`.  Note that this
-runs in parallel with `joblib` and is set up to use all of your cores:
+runs in parallel with `joblib` and is set up to use all of your cores by
+default:
 ```bash
+python main.py --help # for command line options
 python main.py
 ```
 
@@ -28,16 +31,27 @@ jupyter notebook
 ```
 
 This should open in your browser.  Navigate to `Analyze.ipynb` and run all
-cells.  The last cell is a histogram showing a distribution of the number of
-guesses each strategy took to find the answer.
+cells.  The last cells shows a statistics table for each strategy and several
+histogram plots showing a distribution of guesses-to-win (or lose) for each
+strategy.
+
+This system is designed to allow 6 guesses.  If a strategy shows a 7th guess, 
+that means it lost that game.
 
 ## Implementing new strategies
 Create your new strategies inside of `./wordle/strategies/`.  A strategy is a
-subclass of the `wordle.strategies.strategy.Strategy` class.  You need to
+subclass of the `wordle.types.strategy.Strategy` class.  You need to
 implement two methods:
 * `make_guess` - This is how your strategy chooses the next word
 * `incorporate_feedback` - This is how your strategy updates its state based on
     the most recent guess and feedback from when it was compared to the answer.
+
+Make the new strategy available to the application by adding it to the 
+`ALL_STRATEGIES` list inside `wordle/strategies/__init__.py`.  You will be 
+able to execute the strategy as follows:
+```bash
+python main.py --strategy MyStrategy
+```
 
 ## Feedback
 When you make a guess in Wordle, the app compares your guess to the hidden word
@@ -74,5 +88,5 @@ Hidden word is "ELATE"
 Source: https://nerdschalk.com/wordle-same-letter-twice-rules-explained-how-does-it-work/ 
 
 ## TODO
-* Create more strategies
+* Create more strategies...
 * Logging

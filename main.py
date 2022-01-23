@@ -14,7 +14,7 @@ def main(
     dry_run: bool = False,
     max_guesses: int = 6,
     batch_size: int = 10,
-    strategies: Optional[List[str]] = None,
+    strategy: Optional[List[str]] = None,
 ):
     conf = CliConfig(
         n_trials_per_answer=n_trials,
@@ -23,7 +23,7 @@ def main(
         dry_run=dry_run,
         max_guesses=max_guesses,
         batch_size=batch_size,
-        strategy_names=strategies or ALL_STRATEGY_NAMES,
+        strategy_names=strategy or ALL_STRATEGY_NAMES,
     )
     run(conf)
 

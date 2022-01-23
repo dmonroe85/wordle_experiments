@@ -53,3 +53,4 @@ def build_batch_runs(
                 if len(batch) == batch_size:
                     yield batch_runner(batch)
                     batch = []
+    yield batch_runner(batch)
