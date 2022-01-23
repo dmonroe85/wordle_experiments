@@ -1,11 +1,11 @@
 import pytest
 
-from wordle.simulator.answer import Answer
+from wordle.types import Feedback, Word
 
 
 # feedback codes are defined in wordle.simulator.feedback
 @pytest.mark.parametrize(
-    "answer,guess,feedback",
+    "answer,guess,feedback_string",
     [
         pytest.param(
             "abbey",
@@ -51,5 +51,6 @@ from wordle.simulator.answer import Answer
         ),
     ]
 )
-def test_answer(answer: str, guess: str, feedback: str):
-    assert Answer(answer).check_guess(guess) == feedback
+def test_word(answer: str, guess: str, feedback_string: str):
+    feedback = [Feedback(f) for f in feedback_string]
+    assert Word(answer).get_feedback(Word(guess)) == feedback

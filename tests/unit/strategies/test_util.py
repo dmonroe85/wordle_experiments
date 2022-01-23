@@ -1,11 +1,11 @@
 import pytest
 
-from wordle.simulator.answer import Answer
 from wordle.strategies.util import keep_after_feedback
+from wordle.types import Word
 
 
 @pytest.mark.parametrize(
-    "answer,guess,word,keep",
+    "answer_string,guess_string,word_string,keep",
     [
         pytest.param("ear", "ear", "ear", True, id="Perfect match"),
         pytest.param("ear", "are", "era", True, id="Permutations of matching characters"),
@@ -16,7 +16,9 @@ from wordle.strategies.util import keep_after_feedback
         pytest.param("aback", "abaca", "aback", True, id="Keep the actual answer"),
     ]
 )
-def test_keep_after_feedback(answer: str, guess: str, word: str, keep: bool):
-    answer = Answer(answer)
-    feedback = answer.check_guess(guess)
-    assert keep_after_feedback(word, guess, feedback) == keep
+def test_keep_after_feedback(answer_string: str, guess_string: str, word_string: str, keep: bool):
+    answer = Word(answer_string)
+    guess = Word(guess_string)
+    list_word = Word(word_string)
+    feedback = answer.get_feedback(guess)
+    assert keep_after_feedback(list_word, guess, feedback) == keep

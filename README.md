@@ -74,9 +74,7 @@ Source: https://nerdschalk.com/wordle-same-letter-twice-rules-explained-how-does
 
 ## TODO
 * CLI args to
-    * change number of trials per word
-    * total number of trials
-    * which strategies run
-    * parallelism
+    * total number of answers to test
 * Profile to find bottlenecks and make the system faster
 * Create more strategies
+* Logging

@@ -1,12 +1,12 @@
 import random
 from typing import List
 
-from .strategy import Strategy
+from ..types import Strategy, Word
 
 
 class StrategyRandomWithoutReplacement(Strategy):
-    def make_guess(self) -> str:
+    def make_guess(self) -> Word:
         return self.wordlist.pop()
 
-    def incorporate_feedback(self, guess: str, feedback: str):
+    def incorporate_feedback(self, guess: Word, feedback: str):
         pass

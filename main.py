@@ -1,28 +1,21 @@
-from functools import reduce
-import json
+from typing import List, Optional
 
-from joblib import Parallel, delayed
+import typer
 
-from wordle.simulator import build_runners, Stats
-from wordle.strategies import *
+from wordle.app import run
+from wordle.strategies import ALL_STRATEGY_NAMES
 
-n_iterations_per_word = 10
-strategies = [
-    # StrategyRandomWithReplacement,
-    # StrategyRandomWithoutReplacement,
-    StrategyFilterOnFeedback,
-]
 
-if __name__ == '__main__':
-    print(f"Running {len(strategies)} strategies, {n_iterations_per_word} trials on each word.")
-    stats_list = Parallel(n_jobs=-1)(delayed(run)()for run in build_runners(strategies, n_iterations_per_word))
-    
-    print(f"Merging {len(stats_list)} results together")
-    stats = reduce(
-        lambda s1, s2: s1.merge(s2),
-        stats_list
-    )
-    
-    print("Writing output")
-    with open("results.json", "w") as ostream:
-        json.dump(stats.dict(), ostream)
+def main(
+    n_trials: int = 10,
+    n_answers: Optional[int] = None,
+    parallelism: int = -1,
+    strategies: Optional[List[str]] = None,
+    dry_run: bool = False,
+):
+    strategies_to_run = strategies or ALL_STRATEGY_NAMES
+    run(n_trials, n_answers, parallelism, strategies_to_run, dry_run)
+
+
+if __name__ == "__main__":
+    typer.run(main)

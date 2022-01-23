@@ -2,19 +2,16 @@ from dataclasses import dataclass
 import random
 from typing import List
 
-from .answer import Answer
-from .feedback import *
-from .stats import Stats
-from ..strategies.strategy import Strategy
+from ..types import Feedback, Stats, Strategy, Word
 
 
-def run_game(strategy: Strategy, answer: Answer) -> Stats:
+def run_game(strategy: Strategy, answer: Word) -> Stats:
     n_guesses = 0
-    feedback = WRONG
+    feedback = [WRONG]
 
-    while any(c != CORRECT for c in feedback):
+    while any(c is not Feedback.CORRECT for c in feedback):
         guess = strategy.make_guess()
-        feedback = answer.check_guess(guess)
+        feedback = answer.get_feedback(guess)
         strategy.incorporate_feedback(guess, feedback)
         n_guesses += 1
 

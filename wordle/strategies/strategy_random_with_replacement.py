@@ -1,11 +1,12 @@
 import random
+from typing import List
 
-from .strategy import Strategy
+from ..types import Feedback, Strategy, Word
 
 
 class StrategyRandomWithReplacement(Strategy):
-    def make_guess(self) -> str:
+    def make_guess(self) -> Word:
         return random.choice(self.wordlist)
 
-    def incorporate_feedback(self, guess: str, feedback: str):
+    def incorporate_feedback(self, guess: Word, feedback: List[Feedback]):
         pass

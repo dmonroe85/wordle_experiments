@@ -4,5 +4,6 @@ __pycache__
 *.tmp
 *.swp
 results.json
+results/
 v/
 venv/
