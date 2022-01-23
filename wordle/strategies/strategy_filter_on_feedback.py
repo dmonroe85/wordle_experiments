@@ -14,4 +14,3 @@ class StrategyFilterOnFeedback(Strategy):
             w for w in self.wordlist
             if keep_after_feedback(w, guess, feedback)
         ]
-
