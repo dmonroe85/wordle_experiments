@@ -8,8 +8,8 @@ from wordle.strategies import *
 
 n_iterations_per_word = 10
 strategies = [
-    StrategyRandomWithReplacement,
-    StrategyRandomWithoutReplacement,
+    # StrategyRandomWithReplacement,
+    # StrategyRandomWithoutReplacement,
     StrategyFilterOnFeedback,
 ]
 
