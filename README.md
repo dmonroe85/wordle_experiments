@@ -1,13 +1,14 @@
 # Wordle Experiments
 
-This repo contains a framework for testing automated wordle strategies.
+This repo contains a framework for testing automated wordle strategies.  It was
+developed and tested using Python3.10.
 
 Word lists came from here:
     https://www.reddit.com/r/wordle/comments/s4tcw8/comment/hstkip2/?utm_source=share&utm_medium=web2x&context=3
 
 To install, set up a virtualenv and activate it.  Then run
 ```bash
-pip install -r requirements.in
+pip install -r requirements.lock
 ```
 
 To run tests:
@@ -43,7 +44,7 @@ When you make a guess in Wordle, the app compares your guess to the hidden word
 and displays a status for each character using colors in the UI.  This is a
 statistical simulator so we use letter encodings instead.
 
-The feedback statuses are encoded in the `wordle.simulator.feedback` module.
+The feedback statuses are encoded in the `wordle.types.feedback` module.
 
 Statuses:
 * `CORRECT` (code `C`, a.k.a. Green) - This character is correct, and in the
@@ -73,8 +74,5 @@ Hidden word is "ELATE"
 Source: https://nerdschalk.com/wordle-same-letter-twice-rules-explained-how-does-it-work/ 
 
 ## TODO
-* CLI args to
-    * total number of answers to test
-* Profile to find bottlenecks and make the system faster
 * Create more strategies
 * Logging

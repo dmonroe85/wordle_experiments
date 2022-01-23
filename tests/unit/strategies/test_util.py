@@ -1,7 +1,7 @@
 import pytest
 
 from wordle.strategies.util import keep_after_feedback
-from wordle.types import Word
+from wordle.types import Feedback, Word
 
 
 @pytest.mark.parametrize(
@@ -20,5 +20,5 @@ def test_keep_after_feedback(answer_string: str, guess_string: str, word_string:
     answer = Word(answer_string)
     guess = Word(guess_string)
     list_word = Word(word_string)
-    feedback = answer.get_feedback(guess)
-    assert keep_after_feedback(list_word, guess, feedback) == keep
+    feedback = Feedback.get_feedback(answer, guess)
+    assert keep_after_feedback(list_word, guess, tuple(feedback)) == keep

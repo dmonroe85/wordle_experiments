@@ -2,9 +2,10 @@ import pytest
 
 from typing import List
 
-from wordle.util import load_answers, load_non_answers
+from wordle.types import Feedback
 from wordle.strategies import StrategyFilterOnFeedback
 from wordle.types import Word
+from wordle.util import load_answers, load_non_answers
 
 
 
@@ -31,6 +32,6 @@ def test_strategy_filter_on_feedback(guess_strings: List[str]):
     for guess in guesses:
         strategy.wordlist = [w for w in strategy.wordlist if w != guess]
         assert answer in strategy.wordlist, (answer, guess)
-        feedback = answer.get_feedback(guess)
+        feedback = Feedback.get_feedback(answer, guess)
         strategy.incorporate_feedback(guess, feedback)
         assert answer in strategy.wordlist, (answer, guess, feedback)

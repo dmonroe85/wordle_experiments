@@ -15,5 +15,5 @@ class StrategyMatchedFeedback(Strategy):
     def incorporate_feedback(self, guess: Word, feedback: List[Feedback]):
         self.wordlist = [
             w for w in self.wordlist
-            if w.get_feedback(guess) == feedback
+            if Feedback.get_feedback(w, guess) == feedback
         ]

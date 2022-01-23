@@ -53,4 +53,4 @@ from wordle.types import Feedback, Word
 )
 def test_word(answer: str, guess: str, feedback_string: str):
     feedback = [Feedback(f) for f in feedback_string]
-    assert Word(answer).get_feedback(Word(guess)) == feedback
+    assert Feedback.get_feedback(Word(answer), Word(guess)) == feedback

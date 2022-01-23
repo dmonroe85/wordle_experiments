@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from ..types import Feedback, Word
 
@@ -14,4 +14,8 @@ def keep_after_feedback(list_word: Word, guess: Word, feedback: List[Feedback]) 
             keep = keep and (g in list_word.text)
         elif f is Feedback.CORRECT:
             keep = keep and (g == l)
+
+        if not keep:
+            break
+
     return keep
