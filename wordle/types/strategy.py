@@ -14,8 +14,9 @@ class Strategy(ABC):
         """
         self.wordlist = wordlist[:]  # don't mutate the original
 
-    def get_name(self) -> str:
-        return self.__class__.__name__
+    @classmethod
+    def get_name(cls) -> str:
+        return cls.__name__
 
     @abstractmethod
     def make_guess(self) -> Word:

@@ -7,10 +7,11 @@ class StrategyFirstGuess(Strategy):
     """Part of the implementation from here:
         https://github.com/mrdmnd/wordle_ai/blob/main/solver.py
     """
+    initial_word = None # Classvar instead of instance var
+
     def __init__(self, wordlist: List[Word]):
         super().__init__(wordlist)
         self.first_guess = True
-        self.initial_word = None
 
     def make_guess(self) -> Word:
         if self.first_guess:
@@ -29,30 +30,36 @@ class StrategyFirstGuess(Strategy):
 
 
 class StrategyFirstGuessAdieu(StrategyFirstGuess):
-    def __init__(self, wordlist: List[Word]):
-        super().__init__(wordlist)
-        self.initial_word = "adieu"
+    initial_word = "adieu"
 
 
 class StrategyFirstGuessAudio(StrategyFirstGuess):
-    def __init__(self, wordlist: List[Word]):
-        super().__init__(wordlist)
-        self.initial_word = "audio"
+    initial_word = "audio"
 
 
 class StrategyFirstGuessRoate(StrategyFirstGuess):
-    def __init__(self, wordlist: List[Word]):
-        super().__init__(wordlist)
-        self.initial_word = "roate"
+    initial_word = "roate"
 
 
 class StrategyFirstGuessRaise(StrategyFirstGuess):
-    def __init__(self, wordlist: List[Word]):
-        super().__init__(wordlist)
-        self.initial_word = "raise"
+    initial_word = "raise"
 
 
 class StrategyFirstGuessArise(StrategyFirstGuess):
-    def __init__(self, wordlist: List[Word]):
-        super().__init__(wordlist)
-        self.initial_word = "arise"
+    initial_word = "arise"
+
+
+class StrategyFirstGuessBoozy(StrategyFirstGuess):
+    initial_word = "boozy"
+
+
+class StrategyFirstGuessGypsy(StrategyFirstGuess):
+    initial_word = "gypsy"
+
+
+class StrategyFirstGuessSerai(StrategyFirstGuess):
+    initial_word = "serai"
+
+
+class StrategyFirstGuessSoare(StrategyFirstGuess):
+    initial_word = "soare"

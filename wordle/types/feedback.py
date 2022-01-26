@@ -49,3 +49,11 @@ class Feedback(Enum):
     @staticmethod
     def get_feedback(answer: Word, guess: Word) -> List["Feedback"]:
         return Feedback.calc_feedback(answer, guess)
+
+    @staticmethod
+    def to_string(fb_list: List["Feedback"]) -> str:
+        return ''.join([x.value for x in fb_list])
+
+    @staticmethod
+    def from_string(fb_string: str) -> List["Feedback"]:
+        return [Feedback(c) for c in fb_string]

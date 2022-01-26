@@ -8,3 +8,4 @@ results/
 v/
 venv/
 profile.txt
+feedback_cache/

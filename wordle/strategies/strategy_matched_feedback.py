@@ -11,6 +11,7 @@ class StrategyMatchedFeedback(Strategy):
         return self.wordlist.pop()
 
     def incorporate_feedback(self, guess: Word, feedback: List[Feedback]):
+        """Only keep the words that can possibly produce the same feedback."""
         self.wordlist = [
             w for w in self.wordlist
             if Feedback.get_feedback(w, guess) == feedback
