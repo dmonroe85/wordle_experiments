@@ -4,10 +4,7 @@ from ..types import Feedback, Strategy, Word
 
 
 class StrategyFirstGuess(Strategy):
-    """Part of the implementation from here:
-        https://github.com/mrdmnd/wordle_ai/blob/main/solver.py
-    """
-    initial_word = None # Classvar instead of instance var
+    initial_word = None
 
     def __init__(self, wordlist: List[Word]):
         super().__init__(wordlist)

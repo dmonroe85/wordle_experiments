@@ -1,24 +1,33 @@
 from typing import List
 
 from ..types import Feedback, Strategy, Word
-from .feedback_lookup_cache import FeedbackLookupCache
+from .feedback_lookup_cache import OrderedLookupCache
 
 
-FIRST_GUESS = "roate"
+FIRST_GUESS = "serai"
 
 
-class StrategyMinMaxFeedbackMatches(Strategy):
-    """A faster version of the solution from here:
-        https://github.com/mrdmnd/wordle_ai/blob/main/solver.py
+class StrategySmallestFeedbackPartition(Strategy):
+    """This is effectively the same as StrategyMinmaxFeedbackMatches, but it's
+    more explicit about what it's doing and is therefore able to be implemented
+    more efficiently.
 
-    This makes the tradeoff of only choosing a guess from the remaining words.
-    I haven't shown it, but we may be throwing away information by not taking a
-    guess from the full original list of words.
+    The reason the minmax strategy works is because the feedback set for a
+    guess gives a mutually exclusive subset of potential answers.  In order
+    to minimize our guesses, we need to reduce the answer space by the greatest
+    amount on every turn.  In order to do this, we evaluate every potential
+    guess and find the corresponding largest feedback set; and out of those
+    max-sets, we pick the minimum.  This minimizes risk and prunes the space
+    by the greatest amount.
+
+    We can take advantage of this fact and structure our file-cache in such a
+    way that we order the feedback sets by size on-disk.  This makes efficient
+    lookup faster, and it makes iteration on the full list more tractable.
     """
     def __init__(self, wordlist):
         super().__init__(wordlist)
         self.first_guess = True
-        self.cache = FeedbackLookupCache()
+        self.cache = OrderedLookupCache()
 
     def make_guess(self) -> Word:
         if self.first_guess:
@@ -48,34 +57,27 @@ class StrategyMinMaxFeedbackMatches(Strategy):
         ]
 
 
-class StrategyMinMaxFeedbackMatchesV2(Strategy):
-    """The original solution from here:
-        https://github.com/mrdmnd/wordle_ai/blob/main/solver.py
-
-    TODO: This is practically intractible (I don't want to wait days for this
-    to finish), so I need to see if there is another optimization I can make.
-    This is slow because it ALWAYS loops through the full original list to find
-    a guess.
-
-    The idea is that there may be more information gained by including words
-    that we have ruled out.
+class StrategySmallestFeedbackPartitionV2(Strategy):
+    """This is the same as V1, but it iterates over the entire original
+    wordlist instead of being restricted to the answer list.
     """
     def __init__(self, wordlist):
         super().__init__(wordlist)
-        self.original_list = wordlist[:]
         self.first_guess = True
-        self.cache = FeedbackLookupCache()
+        self.cache = OrderedLookupCache()
+        self.original_list = wordlist[:]
 
     def make_guess(self) -> Word:
         if self.first_guess:
+            # Make a first guess to avoid getting stuck in a giant loop
             guess = Word(FIRST_GUESS)
             self.wordlist.remove(guess)
             self.first_guess = False
             return guess
         else:
-            wordset = set(w.text for w in self.wordlist)
+            wordset = set(w.text for w in self.original_list)
             best_guess, best_score = None, float('inf')
-            for potential_guess in self.original_list:
+            for potential_guess in self.wordlist:
                 score = self.cache.sizeof_largest_feedback_set(
                     potential_guess,
                     wordset,
@@ -83,6 +85,7 @@ class StrategyMinMaxFeedbackMatchesV2(Strategy):
                 if score < best_score:
                     best_guess, best_score = potential_guess, score
             return best_guess
+
 
     def incorporate_feedback(self, guess: Word, feedback: List[Feedback]):
         """Only keep the words that can possibly produce the same feedback."""

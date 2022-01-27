@@ -9,6 +9,10 @@ from .strategy_minmax_feedback_matches import (
     StrategyMinMaxFeedbackMatchesV2,
 )
 from .strategy_max_entropy import StrategyMaxEntropy
+from .strategy_smallest_feedback_partition import (
+    StrategySmallestFeedbackPartition,
+    StrategySmallestFeedbackPartitionV2,
+)
 from .strategy_first_guess import (
     StrategyFirstGuessAdieu,
     StrategyFirstGuessArise,
@@ -20,10 +24,22 @@ from .strategy_first_guess import (
     StrategyFirstGuessSerai,
     StrategyFirstGuessSoare,
 )
+from .strategy_25_characters import (
+    Strategy25Characters0,
+    Strategy25Characters1,
+    Strategy25Characters2,
+    Strategy25Characters3,
+    Strategy25Characters4,
+)
 
 # Strategy collections
 ALL_STRATEGIES = [
     # StrategyMinMaxFeedbackMatchesV2,
+    Strategy25Characters0,
+    Strategy25Characters1,
+    Strategy25Characters2,
+    Strategy25Characters3,
+    Strategy25Characters4,
     StrategyFilterOnFeedback,
     StrategyFirstGuessAdieu,
     StrategyFirstGuessArise,
@@ -40,8 +56,25 @@ ALL_STRATEGIES = [
     StrategyMinMaxFeedbackMatches,
     StrategyRandomWithoutReplacement,
     StrategyRandomWithReplacement,
+    StrategySmallestFeedbackPartition,
+    StrategySmallestFeedbackPartitionV2,
 ]
 
 ALL_STRATEGY_NAMES = [s.__name__ for s in ALL_STRATEGIES]
 
 STRATEGY_LOOKUP = dict(zip(ALL_STRATEGY_NAMES, ALL_STRATEGIES))
+
+STRATEGIES_THAT_USE_FEEDBACK_CACHE = [
+    StrategyMinMaxFeedbackMatches,
+    StrategyMinMaxFeedbackMatchesV2,
+]
+
+STRATEGIES_THAT_USE_ORDERED_CACHE = [
+    StrategySmallestFeedbackPartition,
+    StrategySmallestFeedbackPartitionV2,
+    Strategy25Characters0,
+    Strategy25Characters1,
+    Strategy25Characters2,
+    Strategy25Characters3,
+    Strategy25Characters4,
+]

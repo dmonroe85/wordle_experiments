@@ -1,4 +1,5 @@
 import time
+import os
 
 from joblib import Parallel, delayed
 
@@ -9,7 +10,9 @@ from wordle.strategies.feedback_lookup_cache import (
 from wordle.types import Feedback, Word
 from wordle.util import load_answers, load_non_answers, compute_cache_for_a_guess
 
-print("Precomputing the FeedbackLookupCache")
+os.makedirs(FEEDBACK_CACHE_PATH, exist_ok=True)
+
+print("Precomputing the FeedbackLookupCache data")
 all_words = sorted(load_answers() + load_non_answers(), key=lambda w: w.text)
 
 # Filling up the cache and calculating cartesian scores

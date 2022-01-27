@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from typing import List
 
 from ..types import Feedback, Strategy, Word
